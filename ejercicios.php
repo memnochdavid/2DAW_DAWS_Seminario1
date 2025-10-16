@@ -49,7 +49,7 @@ derecha a izquierda, por ejemplo: "ana", "reconocer", "anilina".
  * */
 
 function ej04_isPalindromo($palabra){
-    if($palabra === "") return;
+    if($palabra === "") return false;
     else{
         return $palabra === strrev($palabra);
     }
