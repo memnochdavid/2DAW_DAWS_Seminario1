@@ -1,4 +1,25 @@
 <?php
+
+function botonEj($ej){
+    echo "<button type='button'>Ejecuta</button><br> <br>";
+    return match (true){
+        $ej === 1 => return ej01_maxFromArray(),
+}
+
+function execSeminario()
+{
+    $maxEjercicios = 29;
+    echo "DWES - Seminario 1 <br>";
+    echo "EJERCICIOS: <br> <br>";
+    echo "----------------------------------------------- <br> <br>";
+
+    for($i = 1; $i <= $maxEjercicios; $i++){
+        echo "Ejercicio $i: ";
+        botonEj($i);
+    }
+
+}
+
 /*
  * Ejercicio 1. Número máximo de un array
 Crea una función que obtenga el número máximo de un array de números
@@ -8,9 +29,10 @@ $arrayEj1 = [2, 5, 99, 0, 1];
 
 function ej01_maxFromArray(array $arrayEj1)
 {
+    echo "El array es: ".var_dump($arrayEj1);
     $maxVal = $arrayEj1[0];
     for($i = 1; $i < count($arrayEj1); $i++){
-        if($maxVal > $arrayEj1[$i]){
+        if($maxVal < $arrayEj1[$i]){
             $maxVal = $arrayEj1[$i];
         }
     }
@@ -74,3 +96,7 @@ function ej05_CuentaLetras($cadenaTexto, $letra){
 /*
  *
  * */
+
+
+
+execSeminario();
