@@ -111,23 +111,86 @@ Ejemplo: sumaDigitos(245) = 2 + 4 + 5 = 11
  * */
 
 function ej08($num) {
-    $numCifras = 0;
-    while(true){
-        if($num % 10 == 0){
-            $numCifras ++;
-        }
-        else break;
+    $cifras = strval($num);
+    $suma = 0;
+    for($i = 0; $i < strlen($cifras); $i++){
+        $suma += (int)$cifras[$i];
     }
-
-
+    return $suma;
 }
 
+/*
+ *Ejercicio 9. Máximo común divisor (MCD)
+Crea una función que calcule el máximo común divisor de dos números naturales.
+ * */
+
+function ej09($n1, $n2) {
+    $mcd = 1;
+    $mayor = ($n1 > $n2) ? $n1 : $n2;
+    $tope = $mayor / 2;
+
+    for($i = 2; $i < $tope; $i++){
+        if(($n1 % $i === 0) && ($n2 % $i === 0) ){
+            $mcd = $i;
+        }
+    }
+    return $mcd;
+}
+
+/*
+ * Ejercicio 10. Fibonacci
+Crea una función que calcule el término n-ésimo de la sucesión de Fibonacci.
+Nota: En matemática, la sucesión de Fibonacci se trata de una serie infinita de números
+naturales que empieza con un 0 y un 1 y continúa añadiendo números que son la suma de los
+dos anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597...
+ * */
+
+function ej10($n)
+{
+    $fibo = [0, 1];
+    $pos = 2;
+    while($n > 0){
+        $fibo[] = $fibo[$pos-1] + $fibo[$pos-2];
+        $pos += 1;
+        $n--;
+    }
+    return $fibo;
+}
+
+/*
+ * Ejercicio 11. Números primos relativos
+Crea una función que determine si dos números son primos relativos.
+Nota: Se dice que dos números son relativamente primos si su factor común más grande
+(MCD) es 1.
+ * */
+
+function ej11($n1, $n2){
+    return ej09($n1, $n2) === 1;
+}
+
+/*
+ *Ejercicio 12. Número capicúa
+Crea una función que determine si un número dado es capicúa.
+Nota: Un número capicúa es aquel que se lee igual de izquierda a derecha que de derecha a
+izquierda, por ejemplo: 121, 1331, 45654.
+ * */
+
+function ej12($n1){
+    $strNum = strval($n1);
+    return ej04($strNum);
+}
+
+/*
+ *Ejercicio 13. Generador de tabla HTML
+Crea una función que dada una cadena de texto con formato Emmet devuelva su
+correspondiente etiqueta HTML, teniendo en cuenta sólo los atributos de clase e id.
+ * */
+
+function ej13($emmet){
 
 
-
-
-
-
+    return "";
+}
 
 
 function validaInput($mensaje, $tipo) {
@@ -204,6 +267,41 @@ function execSeminario() {
             $subcadena = "hola holita, vecinito.";
             echo "Antes:\n".$subcadena."\n";
             echo "Después:\n".ej07($subcadena)."\n";
+            break;
+        case 8:
+            $num = 12995;
+            $output = "La suma de los dígitos de $num es: ".ej08($num);
+
+            echo $output;
+            break;
+        case 9:
+            $num1 = 25;
+            $num2 = 125;
+            echo "El MCD de $num1 y $num2 es: ".ej09($num1,$num2);
+            break;
+        case 10:
+            $n = 10;
+            echo "Los $n primero número de Fibonacci son: ".print_r(ej10($n), true);
+            break;
+        case 11:
+            $n1 = 7;
+            $n2 = 10;
+            if(ej11($n1,$n2)){
+                echo "$n1 y $n2 son primos relativos.";
+            } else{
+                echo "$n1 y $n2 no son primos relativos.";
+            }
+            break;
+        case 12:
+            $num = 12343321;
+            if(ej12($num)){
+                echo "$num es capicua;";
+            }else{
+                echo "$num no es capicua;";
+            }
+            break;
+        case 13:
+
             break;
         default:
             echo "CAGASTE";
