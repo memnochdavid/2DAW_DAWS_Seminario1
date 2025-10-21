@@ -187,9 +187,66 @@ correspondiente etiqueta HTML, teniendo en cuenta sólo los atributos de clase e
  * */
 
 function ej13($emmet){
+    $output = "";
+    $elementos = [];
+    $etiqueta = "";
+    $id = "";
+    $class = "";
+
+    if(str_contains($emmet, ".")){
+        $elementos = explode(".", $emmet);
+        $etiqueta = $elementos[0];
+        $class = explode("#", $elementos[1])[0];
+    }
+    if (str_contains($emmet, "#")){
+        $elementos = explode("#", $emmet);
+        $id = "$elementos[1]";
+    }
+
+    $output = '<div class="'.$class.'" id="'.$id.'">';
+
+    return $output;
+}
 
 
-    return "";
+/*
+ *Ejercicio 14. Mosaico numérico
+Crea una función que dado un número n imprima el siguiente 'mosaico' (para n = 6):
+1
+22
+333
+4444
+55555
+666666
+ * */
+
+function ej14($n)
+{
+    $output = "1\n";
+    for($i = 0; $i <= $n; $i++){
+        $output .= str_repeat("$i", $i)."\n";
+    }
+    return $output;
+}
+
+/*
+ *Ejercicio 15. Comparar arrays elemento a elemento
+Crear una función que reciba dos arrays de enteros y devuelva un array de booleanos que
+determine si los elementos, uno a uno, de ambos arrays son iguales.
+Ejemplo: comparar([1, 2, 3], [1, 2, 4]) → [true, true, false]
+ * */
+
+function ej15($array1, $array2){
+    $verifica = [];
+    for($i = 0; $i < count($array1); $i++){
+        if($array1[$i] !== $array2[$i]){
+            $verifica[$i] = false;
+        }
+        else{
+//            $verifica[$i]
+        }
+    }
+    return true;
 }
 
 
@@ -301,7 +358,13 @@ function execSeminario() {
             }
             break;
         case 13:
-
+            $emmet = "a";
+            echo "Emmet:\n$emmet\n";
+            echo "HTML:\n".ej13($emmet)."\n";
+            break;
+        case 14:
+            $n = 6;
+            echo ej14($n);
             break;
         default:
             echo "CAGASTE";
