@@ -452,8 +452,57 @@ function ej24($precio, $descuento){
 }
 
 /*
+ *Ejercicio 25. Clasificador de notas con match
+Crea una función que utilice la expresión match de PHP 8 para clasificar una nota numérica
+(0-10) en su correspondiente calificación textual.
+Clasificación:
+9-10: Sobresaliente
+7-8: Notable
+5-6: Aprobado
+0-4: Suspenso
+Ejemplo: clasificarNota(8) → "Notable"
+ * */
+
+function ej25($nota){
+    return match (true){
+        ($nota >= 0 && $nota <= 4) => "Suspenso",
+        ($nota >= 5 && $nota <= 6) => "Aprobado",
+        ($nota >= 7 && $nota <= 8) => "Notable",
+        ($nota >= 9 && $nota <= 10) => "Sobresaliente"
+    };
+}
+
+/*
+ * Ejercicio 26. Validador de datos con operador null coalescing
+Crea una función que reciba un array asociativo con datos de usuario (nombre, email, edad,
+ciudad) y utilice el operador null coalescing (??) para asignar valores por defecto cuando
+algún campo esté ausente o sea null.
+Valores por defecto:
+nombre: "Anónimo"
+email: "sin-email@example.com"
+edad: 18
+ciudad: "Desconocida"
+Ejemplo:
+validarDatos(['nombre' => 'Juan', 'edad' => 25])
+→ ['nombre' => 'Juan', 'email' => 'sin-email@example.com', 'edad' => 25,
+'ciudad' => 'Desconocida']
  *
  * */
+
+function ej26($cosa){
+    $aux = [];
+    foreach($cosa as $instancia => $valor){
+        $aux[$instancia] = $valor ?? "caca";
+    }
+    return $aux;
+}
+
+
+
+
+
+
+
 
 
 
@@ -655,6 +704,25 @@ function execSeminario() {
             echo "Precio para estudiantes: ".ej24($precio, "estudiante")."€\n";
             echo "Precio para jubilados: ".ej24($precio, "jubilado")."€\n";
             echo "Precio para VIP: ".ej24($precio, "vip")."€\n";
+
+            break;
+        case 25:
+            $nota = 9;
+            echo "Tu nota (".$nota.") es ".ej25($nota);
+            break;
+        case 26:
+            $usuario = [
+                "nombre" => "Juan",
+                "email" => "",
+                "edad" => 18,
+                "ciudad" => "Madrid"
+            ];
+
+            echo "Array original: ".print_r($usuario);
+
+            echo "Array validado: ".print_r(ej26($usuario));
+
+
 
             break;
         default:
