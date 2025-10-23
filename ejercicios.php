@@ -6,8 +6,6 @@ Crea una función que obtenga el número máximo de un array de números
  * */
 
 
-use Dom\Element;
-
 function ej01(array $array)
 {
     $maxVal = $array[0];
@@ -489,22 +487,84 @@ validarDatos(['nombre' => 'Juan', 'edad' => 25])
  *
  * */
 
-function ej26($cosa){
-    $aux = [];
-    foreach($cosa as $instancia => $valor){
-        $aux[$instancia] = $valor ?? "caca";
-    }
-    return $aux;
+function ej26($objeto){
+    $objeto['nombre'] ?? $objeto['nombre'] = 'Anónimo';
+    $objeto['email'] ?? $objeto['email'] = 'sin-email@example.com';
+    $objeto['edad'] ?? $objeto['edad'] = '69';
+    $objeto['ciudad'] ?? $objeto['ciudad'] = 'Desconocida';
+    return $objeto;
 }
 
+/*
+ * Ejercicio 27. Acceso seguro a propiedades con nullsafe operator
+Crea una función que reciba un array asociativo que representa un usuario con datos anidados
+(dirección, teléfono, etc.) y utilice el operador nullsafe (?->) para acceder de forma segura a
+propiedades que podrían no existir, devolviendo un mensaje apropiado.
+Nota: Simula objetos usando arrays asociativos o stdClass.
+Ejemplo de estructura:
+$usuario = [
+        'nombre' => 'Ana',
+        'direccion' => [
+            'calle' => 'Gran Vía',
+            'ciudad' => 'Madrid'
+        ]
+];
+La función debe intentar acceder a $usuario['direccion']['codigoPostal'] de forma segura.
+ * */
 
+function ej27($objeto): string
+{
+    $usuario = (object)$objeto;
+    $direccion = (object)$objeto['direccion'];
 
+    $nombre = $usuario?->nombre;
+    $calle = $direccion?->calle;
+    $ciudad = $direccion?->ciudad;
+    $cp = $direccion?->codigoPostal;
 
+    $output = "usuario = [\n";
+    $output .= "\t";
+    $output .= $nombre ?? "Sin nombre";
+    $output .= ",\n";
+    $output .= "\t";
+    $output .= $calle ?? "Sin calle";
+    $output .= ",\n";
+    $output .= "\t";
+    $output .= $ciudad ?? "Sin ciudad";
+    $output .= ",\n";
+    $output .= "\t";
+    $output .= $cp ?? "Sin CP";
+    $output .= ",\n";
+    $output .= "]";
 
+    return $output;
+}
 
+/*
+ *Ejercicio 28. Calculadora interactiva
+Crea un programa que simule una calculadora interactiva. El programa debe solicitar al
+usuario dos números y una operación (+, -, *, /) usando readline() o simulando entrada de
+datos, y mostrar el resultado. Debe validar que los números sean válidos y manejar la división
+por cero.Ejemplo de interacción:
+Introduce el primer número: 10
+Introduce el segundo número: 5
+Introduce la operación (+, -, *, /): *
+Resultado: 10 * 5 = 50
+ * */
 
+function calculadora($operacion,$n1, $n2 = 0){
 
-
+    return match($operacion){
+        '+' => $n1 + $n2,
+        '-' => $n1 - $n2,
+        '*' => $n1 * $n2,
+        '/' => $n2 != 0 ? $n1 / $n2 : 'cagaste',
+        '**' => $n1 ** $n2,
+        '%' => $n1 % $n2,
+        'squirt' => $n1 !=0 ? sqrt($n1) : 'cagaste',
+        default => 'cagaste'
+    };
+}
 
 function validaInput($mensaje, $tipo) {
     $input = readline($mensaje);
@@ -517,6 +577,105 @@ function validaInput($mensaje, $tipo) {
             return null;
     }
 }
+
+function ej28(){
+    $n2 = 0;
+    do{
+        $operador = readline("Operación: (+), (-), (*), (/), (**), (%), (squirt): ");
+    }
+    while($operador != "+" && $operador != "-" && $operador != "/" && $operador != "*" && $operador != "**" && $operador != "%" && $operador != "squirt");
+
+    do{
+        $n1 = validaInputCalculadora("Num 1: ", "int");
+        if($n1 != null) break;
+    }while(true);
+    if($operador != "squirt"){
+        do{
+            $n2 = validaInputCalculadora("Num 2: ", "int");
+            if($n2 != null) break;
+        }while(true);
+    }
+
+    echo "Resultado: ".calculadora($operador,$n1,$n2);
+}
+
+
+
+
+function validaInputCalculadora($mensaje, $tipo) {
+    $input = readline($mensaje);
+
+    switch ($tipo) {
+        case 'int':
+            return filter_var($input, FILTER_VALIDATE_FLOAT) !== false ? $input : null;
+        //se pueden añadir más casas para cada tipo
+        default:
+            return null;
+    }
+}
+
+
+/*
+ *
+ * Ejercicio 29. Conversor de temperaturas con constantes mágicas
+Crea un programa que convierta temperaturas entre Celsius, Fahrenheit y Kelvin. Utiliza
+constantes para las fórmulas de conversión y constantes mágicas de PHP (__FUNCTION__,
+__LINE__) para mostrar información de depuración.
+Fórmulas:
+    - Celsius a Fahrenheit: (C × 9/5) + 32
+    - Celsius a Kelvin: C + 273.15
+    - Fahrenheit a Celsius: (F - 32) × 5/9
+    - Kelvin a Celsius: K - 273.15
+Ejemplo: convertirTemperatura(25, 'celsius', 'fahrenheit') → 77
+ *
+ *
+ * */
+
+function convertirTemperatura(string $from, string $to,float $temperatura):float|string {
+    switch($from){
+        case "celsius":
+            switch($to){
+                case "celsius":
+                    return "¿eres tonto?";
+                case "farenheit":
+                    return ($temperatura * (9/5) + 32);
+                case "kelvin":
+                    return $temperatura + 273.15;
+            }
+            break;
+        case "fahrenheit":
+            switch($to){
+                case "fahrenheit":
+                    return "¿eres tonto?";
+                case "celsius":
+                    return ($temperatura - 32 ) * (9/5);
+            }
+            break;
+        case "kelvin":
+            switch($to){
+                case "kelvin":
+                    return "¿eres tonto?";
+                case "celsius":
+                    return $temperatura - 273.15;
+            }
+            break;
+        default:
+            return "CAGASTE";
+    }
+    return 1;
+}
+
+
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------
+
+
 
 function imprimeArryLinea($array){
     $output = "[";
@@ -712,8 +871,8 @@ function execSeminario() {
             break;
         case 26:
             $usuario = [
-                "nombre" => "Juan",
-                "email" => "",
+                'nombre' => null,
+                "email" => "sdgfdh",
                 "edad" => 18,
                 "ciudad" => "Madrid"
             ];
@@ -724,6 +883,28 @@ function execSeminario() {
 
 
 
+            break;
+        case 27:
+            $usuario = [
+                'nombre' => 'Ana',
+                'direccion' => [
+                    'calle' => 'Gran Vía',
+                    'ciudad' => 'Madrid',
+//                    'codigoPostal' => '12314'
+                ]
+            ];
+
+        echo ej27($usuario);
+
+
+
+
+        break;
+        case 28:
+            ej28();
+            break;
+        case 29:
+            echo convertirTemperatura('celsius', 'farenheit', 25.0);
             break;
         default:
             echo "CAGASTE";
