@@ -677,7 +677,8 @@ function convertirTemperatura(string $from, string $to,float $temperatura):float
 
 
 
-function imprimeArryLinea($array){
+function imprimeArryLinea($array): string
+{
     $output = "[";
     foreach ($array as $elemento){
         $output .= (int)$elemento.",";
@@ -687,7 +688,8 @@ function imprimeArryLinea($array){
 //    return $nombre.' ['.implode(", ", $array).']';//por qué si es false o 0, no se imprime????
 }
 
-function execSeminario() {
+function execSeminario(): void
+{
     do{
         $ejecutaEj = validaInput("Ejercicio a ejecutar: ", "int");
         if($ejecutaEj != null) break;
@@ -806,7 +808,6 @@ function execSeminario() {
             echo imprimeArryLinea($array2, "ArrayEj2:")."\n";
             echo imprimeArryLinea(ej15($array1, $array2), "Array de Verificación:")."\n";
             break;
-            //DUDA
         case 16:
             $array1 = [1,2,3,4,5];
             $multiplica = 4;
