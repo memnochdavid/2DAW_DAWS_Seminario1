@@ -566,7 +566,8 @@ function calculadora($operacion,$n1, $n2 = 0){
     };
 }
 
-function validaInput($mensaje, $tipo) {
+function validaInput($mensaje, $tipo): false|string|null
+{
     $input = readline($mensaje);
 
     switch ($tipo) {
@@ -602,16 +603,14 @@ function ej28(){
 
 
 
-function validaInputCalculadora($mensaje, $tipo) {
+function validaInputCalculadora($mensaje, $tipo): false|string|null
+{
     $input = readline($mensaje);
 
-    switch ($tipo) {
-        case 'int':
-            return filter_var($input, FILTER_VALIDATE_FLOAT) !== false ? $input : null;
-        //se pueden añadir más casas para cada tipo
-        default:
-            return null;
-    }
+    return match ($tipo) {
+        'int' => filter_var($input, FILTER_VALIDATE_FLOAT) !== false ? $input : null,
+        default => null,
+    };
 }
 
 
@@ -631,39 +630,60 @@ Ejemplo: convertirTemperatura(25, 'celsius', 'fahrenheit') → 77
  *
  * */
 
-function convertirTemperatura(string $from, string $to,float $temperatura):float|string {
-    switch($from){
-        case "celsius":
-            switch($to){
-                case "celsius":
-                    return "¿eres tonto?";
-                case "farenheit":
-                    return ($temperatura * (9/5) + 32);
-                case "kelvin":
-                    return $temperatura + 273.15;
-            }
-            break;
-        case "fahrenheit":
-            switch($to){
-                case "fahrenheit":
-                    return "¿eres tonto?";
-                case "celsius":
-                    return ($temperatura - 32 ) * (9/5);
-            }
-            break;
-        case "kelvin":
-            switch($to){
-                case "kelvin":
-                    return "¿eres tonto?";
-                case "celsius":
-                    return $temperatura - 273.15;
-            }
-            break;
-        default:
-            return "CAGASTE";
+
+
+function convertirTemperatura(float $temperatura, string $from, string $to): float|string {
+    define("FACTOR_F_C", 5 / 9);
+    define("FACTOR_C_F", 9 / 5);
+    define("DIFERENCIA_K_C", 273.15);
+    // Normalizamos a minúsculas
+    $from = strtolower($from);
+    $to = strtolower($to);
+
+    if ($from === $to) {
+        return "Error en " . __FUNCTION__ . " (línea " . __LINE__ . "): Las unidades son iguales.";
     }
-    return 1;
+
+    $resultado = null;
+
+    switch ($from) {
+        case 'celsius':
+            if ($to === 'fahrenheit') {
+                $resultado = ($temperatura * FACTOR_C_F) + 32;
+            } elseif ($to === 'kelvin') {
+                $resultado = $temperatura + DIFERENCIA_K_C;
+            }
+            break;
+
+        case 'fahrenheit':
+            if ($to === 'celsius') {
+                $resultado = ($temperatura - 32) * FACTOR_F_C;
+            } elseif ($to === 'kelvin') {
+                $resultado = (($temperatura - 32) * FACTOR_F_C) + DIFERENCIA_K_C;
+            }
+            break;
+
+        case 'kelvin':
+            if ($to === 'celsius') {
+                $resultado = $temperatura - DIFERENCIA_K_C;
+            } elseif ($to === 'fahrenheit') {
+                $resultado = (($temperatura - DIFERENCIA_K_C) * FACTOR_C_F) + 32;
+            }
+            break;
+
+        default:
+            return "Error en " . __FUNCTION__ . " (línea " . __LINE__ . "): Unidad de origen desconocida.";
+    }
+
+    if ($resultado === null) {
+        return "Error en " . __FUNCTION__ . " (línea " . __LINE__ . "): Conversión no válida.";
+    }
+
+    return round($resultado, 2);
 }
+
+
+
 
 
 //-----------------------------------------------------------------------------------------------------------
@@ -914,4 +934,3 @@ function execSeminario(): void
 
 execSeminario();
 
-?>
