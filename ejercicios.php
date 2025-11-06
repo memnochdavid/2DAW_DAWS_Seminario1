@@ -1,5 +1,23 @@
 <?php
 
+class Constantes {
+    //esto no sé hasta qué punto es como quieres que lo hagamos, pero vi en internet
+    // que se podía hacer así y me pareció que se quedaba todo más recogido
+
+
+    //para el ejercicio 24
+    const int DESCUENTO_ESTUDIANTE = 15;
+    const int DESCUENTO_JUBILADO = 20;
+    const int DESCUENTO_VIP = 25;
+
+    //para el ejercicio de las temperaturas
+    const int|float FACTOR_F_C = 5/9;
+    const int|float FACTOR_C_F = 9/5;
+    const float DIFERENCIA_K_C = 273.15;
+}
+
+
+
 /*
  * Ejercicio 1. Número máximo de un array
 Crea una función que obtenga el número máximo de un array de números
@@ -37,7 +55,8 @@ Crea una función que dada una distancia en millas calcule su correspondiente en
 Nota: 1 milla = 1.60934 kilómetros
  * */
 
-function ej03($km){
+function ej03($km): float
+{
     return $km / 1.60934;
 }
 
@@ -48,7 +67,8 @@ Nota: Un palíndromo es una palabra o frase que se lee igual de izquierda a dere
 derecha a izquierda, por ejemplo: "ana", "reconocer", "anilina".
  * */
 
-function ej04($palabra){
+function ej04($palabra): bool
+{
     if($palabra === "") return false;
     else{
         return $palabra === strrev($palabra);
@@ -61,7 +81,8 @@ Crea una función que cuente cuántas veces aparece una letra en un texto
  *
  * */
 
-function ej05($cadenaTexto, $letra){
+function ej05($cadenaTexto, $letra): int
+{
     $ocurrencias = 0;
     for($i = 0; $i < strlen($cadenaTexto); $i++){
         if($cadenaTexto[$i] === $letra){
@@ -76,7 +97,8 @@ function ej05($cadenaTexto, $letra){
 Crea una función que cuente cuántas veces aparece una subcadena en un texto.
  * */
 
-function ej06($texto, $subcadena) {
+function ej06($texto, $subcadena): int
+{
     $ocurrencias = 0;
     $lenTexto = strlen($texto);
     $lenSub = strlen($subcadena);
@@ -93,7 +115,8 @@ function ej06($texto, $subcadena) {
 Crea una función que ponga en mayúscula la primera letra de cada palabra de un texto.
 Ejemplo: "hola mundo" → "Hola Mundo"
  * */
-function ej07($texto) {
+function ej07($texto): string
+{
     $palabras = explode(" ", $texto);
     $output = "";
     for($i = 0; $i < count($palabras); $i++){
@@ -108,7 +131,8 @@ Crea una función que sume los dígitos de un número.
 Ejemplo: sumaDigitos(245) = 2 + 4 + 5 = 11
  * */
 
-function ej08($num) {
+function ej08($num): int
+{
     $cifras = strval($num);
     $suma = 0;
     for($i = 0; $i < strlen($cifras); $i++){
@@ -122,7 +146,8 @@ function ej08($num) {
 Crea una función que calcule el máximo común divisor de dos números naturales.
  * */
 
-function ej09($n1, $n2) {
+function ej09($n1, $n2): int
+{
     $mcd = 1;
     $mayor = ($n1 > $n2) ? $n1 : $n2;
     $tope = $mayor / 2;
@@ -143,7 +168,7 @@ naturales que empieza con un 0 y un 1 y continúa añadiendo números que son la
 dos anteriores: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597...
  * */
 
-function ej10($n)
+function ej10($n): array
 {
     $fibo = [0, 1];
     $pos = 2;
@@ -162,7 +187,8 @@ Nota: Se dice que dos números son relativamente primos si su factor común más
 (MCD) es 1.
  * */
 
-function ej11($n1, $n2){
+function ej11($n1, $n2): bool
+{
     return ej09($n1, $n2) === 1;
 }
 
@@ -173,7 +199,8 @@ Nota: Un número capicúa es aquel que se lee igual de izquierda a derecha que d
 izquierda, por ejemplo: 121, 1331, 45654.
  * */
 
-function ej12($n1){
+function ej12($n1): bool
+{
     $strNum = strval($n1);
     return ej04($strNum);
 }
@@ -184,9 +211,9 @@ Crea una función que dada una cadena de texto con formato Emmet devuelva su
 correspondiente etiqueta HTML, teniendo en cuenta sólo los atributos de clase e id.
  * */
 
-function ej13($emmet){
-    $output = "";
-    $elementos = [];
+function ej13($emmet): string
+{
+
     $etiqueta = "";
     $id = "";
     $class = "";
@@ -233,7 +260,7 @@ Crea una función que dado un número n imprima el siguiente 'mosaico' (para n =
 666666
  * */
 
-function ej14($n)
+function ej14($n): string
 {
     $output = "1\n";
     for($i = 0; $i <= $n; $i++){
@@ -249,7 +276,8 @@ determine si los elementos, uno a uno, de ambos arrays son iguales.
 Ejemplo: comparar([1, 2, 3], [1, 2, 4]) → [true, true, false]
  * */
 
-function ej15($array1, $array2){
+function ej15($array1, $array2): array
+{
     $verifica = [];
     for($i = 0; $i < count($array1); $i++){
         if($array1[$i] === $array2[$i]){
@@ -271,7 +299,8 @@ Crea una función que calcule el producto de todos los elementos en un array de 
 Ejemplo: producto([2, 3, 4]) → 24
  * */
 
-function ej16($array, $multiplica){
+function ej16($array, $multiplica): float|int
+{
     $res = 0;
     for($i = 0; $i < count($array); $i++){
         $res += $array[$i] * $multiplica;
@@ -300,7 +329,8 @@ Nota: Un número primo es un número natural mayor que 1 que solo es divisible p
 sí mismo.
  * */
 
-function ej18($num){
+function ej18($num): bool
+{
     $tope = $num / 2;
     if($num % 2 === 0){
         return false;
@@ -320,7 +350,8 @@ Ejemplo: eliminarVocales("Hola Mundo") → "Hl Mnd"
  *
  * */
 
-function ej19($texto){
+function ej19($texto): string
+{
     $arrayAux = str_split($texto);
     $array = array_filter($arrayAux, function($letra){
         return !str_contains("aeiouAEIOU", $letra);
@@ -339,7 +370,8 @@ Crea una función que calcule el factorial de un número.Nota: El factorial de u
 números enteros positivos desde 1 hasta n. Por ejemplo, 5! = 5 × 4 × 3 × 2 × 1 = 120
  * */
 
-function ej20($n){
+function ej20($n): string
+{
     $factorial = 1;
     $output = $n."! = ";
     for ($i = $n; $i >= 1; $i--) {
@@ -363,7 +395,8 @@ Crea una función que invierta una cadena de texto. Por ejemplo, "hola" debería
 "aloh".
  * */
 
-function ej21($texto){
+function ej21($texto): string
+{
     $otxet = "";
     for($i = strlen($texto)-1; $i >= 0; $i--){
         $otxet .= $texto[$i];
@@ -377,7 +410,8 @@ Crea una función que, dado un número, devuelva true si es un número perfecto 
 sus divisores propios positivos es igual al número), o false en caso contrario.
 Ejemplo: 6 es un número perfecto porque sus divisores propios son 1, 2 y 3, y 1 + 2 + 3 = 6.
  * */
-function ej22_sacaDivs($n){
+function ej22_sacaDivs($n): array
+{
     $divs = [];
     for($i = 1; $i <= $n/2; $i++){
         if($n % $i === 0){
@@ -387,7 +421,8 @@ function ej22_sacaDivs($n){
     return $divs;
 }
 
-function ej22($n){
+function ej22($n): int
+{
     $divisores = ej22_sacaDivs($n);
     $sumatoria = ej02($divisores);
 
@@ -404,7 +439,7 @@ número que es igual a la suma de sus propios dígitos elevados a una potencia).
 153 es un número Armstrong porque 1³ + 5³ + 3³ = 153.
  * */
 
-function ej23($n)
+function ej23($n): bool
 {
     $digitos = [];
     $strAux = strval($n);
@@ -435,13 +470,10 @@ Valores de las constantes: • DESCUENTO_ESTUDIANTE: 15%
 Ejemplo: calcularPrecioFinal(100, "estudiante") → 85
  * */
 
-class Constantes {
-    const DESCUENTO_ESTUDIANTE = 15;
-    const DESCUENTO_JUBILADO = 20;
-    const DESCUENTO_VIP = 25;
-}
 
-function ej24($precio, $descuento){
+
+function ej24($precio, $descuento): float|int
+{
     return match (strtolower($descuento)){
         "estudiante" => $precio - ($precio/100 * Constantes::DESCUENTO_ESTUDIANTE),
         "jubilado" => $precio - ($precio/100 * Constantes::DESCUENTO_JUBILADO),
@@ -461,7 +493,8 @@ Clasificación:
 Ejemplo: clasificarNota(8) → "Notable"
  * */
 
-function ej25($nota){
+function ej25($nota): string
+{
     return match (true){
         ($nota >= 0 && $nota <= 4) => "Suspenso",
         ($nota >= 5 && $nota <= 6) => "Aprobado",
@@ -579,7 +612,8 @@ function validaInput($mensaje, $tipo): false|string|null
     }
 }
 
-function ej28(){
+function ej28(): void
+{
     $n2 = 0;
     do{
         $operador = readline("Operación: (+), (-), (*), (/), (**), (%), (squirt): ");
@@ -633,9 +667,7 @@ Ejemplo: convertirTemperatura(25, 'celsius', 'fahrenheit') → 77
 
 
 function convertirTemperatura(float $temperatura, string $from, string $to): float|string {
-    define("FACTOR_F_C", 5 / 9);
-    define("FACTOR_C_F", 9 / 5);
-    define("DIFERENCIA_K_C", 273.15);
+
     // Normalizamos a minúsculas
     $from = strtolower($from);
     $to = strtolower($to);
@@ -649,25 +681,25 @@ function convertirTemperatura(float $temperatura, string $from, string $to): flo
     switch ($from) {
         case 'celsius':
             if ($to === 'fahrenheit') {
-                $resultado = ($temperatura * FACTOR_C_F) + 32;
+                $resultado = ($temperatura * Constantes::FACTOR_C_F) + 32;
             } elseif ($to === 'kelvin') {
-                $resultado = $temperatura + DIFERENCIA_K_C;
+                $resultado = $temperatura + Constantes::DIFERENCIA_K_C;
             }
             break;
 
         case 'fahrenheit':
             if ($to === 'celsius') {
-                $resultado = ($temperatura - 32) * FACTOR_F_C;
+                $resultado = ($temperatura - 32) * Constantes::FACTOR_F_C;
             } elseif ($to === 'kelvin') {
-                $resultado = (($temperatura - 32) * FACTOR_F_C) + DIFERENCIA_K_C;
+                $resultado = (($temperatura - 32) * Constantes::FACTOR_F_C) + Constantes::DIFERENCIA_K_C;
             }
             break;
 
         case 'kelvin':
             if ($to === 'celsius') {
-                $resultado = $temperatura - DIFERENCIA_K_C;
+                $resultado = $temperatura - Constantes::DIFERENCIA_K_C;
             } elseif ($to === 'fahrenheit') {
-                $resultado = (($temperatura - DIFERENCIA_K_C) * FACTOR_C_F) + 32;
+                $resultado = (($temperatura - Constantes::DIFERENCIA_K_C) * Constantes::FACTOR_C_F) + 32;
             }
             break;
 
