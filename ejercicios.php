@@ -6,14 +6,14 @@ class Constantes {
 
 
     //para el ejercicio 24
-    const int DESCUENTO_ESTUDIANTE = 15;
-    const int DESCUENTO_JUBILADO = 20;
-    const int DESCUENTO_VIP = 25;
+    const DESCUENTO_ESTUDIANTE = 15;
+    const DESCUENTO_JUBILADO = 20;
+    const DESCUENTO_VIP = 25;
 
     //para el ejercicio de las temperaturas
-    const int|float FACTOR_F_C = 5/9;
-    const int|float FACTOR_C_F = 9/5;
-    const float DIFERENCIA_K_C = 273.15;
+    const FACTOR_F_C = 5/9;
+    const FACTOR_C_F = 9/5;
+    const DIFERENCIA_K_C = 273.15;
 }
 
 
@@ -26,13 +26,14 @@ Crea una función que obtenga el número máximo de un array de números
 
 function ej01(array $array)
 {
-    $maxVal = $array[0];
+    return max($array);
+    /*
     for($i = 1; $i < count($array); $i++){
         if($maxVal < $array[$i]){
             $maxVal = $array[$i];
         }
     }
-    return $maxVal;
+    return $maxVal;*/
 }
 
 /*
@@ -957,7 +958,7 @@ function execSeminario(): void
             ej28();
             break;
         case 29:
-            echo convertirTemperatura('celsius', 'farenheit', 25.0);
+            echo convertirTemperatura(25.0, 'celsius', 'fahrenheit');
             break;
         default:
             echo "CAGASTE";
